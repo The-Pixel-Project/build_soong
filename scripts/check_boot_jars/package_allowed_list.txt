@@ -263,6 +263,10 @@ org\.chromium\.arc\..*
 vendor.lineage.health
 vendor.lineage.touch.V1_0
 
+# Lineage sdk
+lineageos\.platform
+org\.lineageos\.platform\.internal
+
 # NV adds
 com\.nvidia
 com\.nvidia\..*
