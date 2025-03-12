@@ -378,7 +378,7 @@ func createPrebuiltEtcModulesInDirectory(ctx android.LoadHookContext, partition,
 				moduleFactory = etc.PrebuiltAnyFactory
 			}
 			modulePropsPtr.Srcs = srcBaseFiles
-			dsts := []string{}
+			dsts := proptools.NewConfigurable[[]string](nil, nil)
 			for _, installBaseFile := range installBaseFiles {
 				dsts.AppendSimpleValue([]string{filepath.Join(relDestDirFromInstallDirBase, installBaseFile)})
 			}

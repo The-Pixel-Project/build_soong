@@ -410,6 +410,26 @@ func TestPrebuiltEtcModuleGen(t *testing.T) {
 				if len(srcs) == 1 {
 					return srcs[0]
 				}
+		true,
+		checkModuleProp(generatedModule0, func(actual interface{}) bool {
+			if p, ok := actual.(*etc.PrebuiltEtcProperties); ok {
+				srcs := p.Srcs.GetOrDefault(eval, nil)
+				return len(srcs) == 1 &&
+					srcs[0] == "apns-full-conf.xml"
+			}
+			return false
+		}),
+	)
+	android.AssertBoolEquals(
+		t,
+		"module expected to set correct dsts property",
+		true,
+		checkModuleProp(generatedModule0, func(actual interface{}) bool {
+			if p, ok := actual.(*etc.PrebuiltDstsProperties); ok {
+				dsts := p.Dsts.GetOrDefault(eval, nil)
+				return len(dsts) == 1 &&
+					dsts[0] == "apns-conf.xml"
+>>>>>>> 07b9ed1d2 (Disallow prebuilt_root module type from setting Dsts property)
 			}
 			return ""
 		}),
@@ -441,6 +461,25 @@ func TestPrebuiltEtcModuleGen(t *testing.T) {
 				if len(srcs) == 1 {
 					return srcs[0]
 				}
+		true,
+		checkModuleProp(generatedModule1, func(actual interface{}) bool {
+			if p, ok := actual.(*etc.PrebuiltEtcProperties); ok {
+				srcs := p.Srcs.GetOrDefault(eval, nil)
+				return len(srcs) == 1 &&
+					srcs[0] == "apns-full-conf.xml"
+			}
+			return false
+		}),
+	)
+	android.AssertBoolEquals(
+		t,
+		"module expected to set correct dsts property",
+		true,
+		checkModuleProp(generatedModule1, func(actual interface{}) bool {
+			if p, ok := actual.(*etc.PrebuiltDstsProperties); ok {
+				dsts := p.Dsts.GetOrDefault(eval, nil)
+				return len(dsts) == 1 &&
+					dsts[0] == "apns-conf-2.xml"
 			}
 			return ""
 		}),
