@@ -371,6 +371,14 @@ func createPrebuiltEtcModulesInDirectory(ctx android.LoadHookContext, partition,
 			}
 		} else {
 			dsts := proptools.NewConfigurable[[]string](nil, nil)
+
+			// If dsts property has to be set and the selected module type is prebuilt_root,
+			// use prebuilt_any instead.
+			if etcInstallPathKey == "" {
+				moduleFactory = etc.PrebuiltAnyFactory
+			}
+			modulePropsPtr.Srcs = srcBaseFiles
+			dsts := []string{}
 			for _, installBaseFile := range installBaseFiles {
 				dsts.AppendSimpleValue([]string{filepath.Join(relDestDirFromInstallDirBase, installBaseFile)})
 			}
