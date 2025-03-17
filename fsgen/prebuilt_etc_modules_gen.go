@@ -362,6 +362,7 @@ func createPrebuiltEtcModulesInDirectory(ctx android.LoadHookContext, partition,
 		}
 
 		if allCopyFileNamesUnchanged {
+
 			// Specify relative_install_path if it is not installed in the base directory of the module.
 			// In case of prebuilt_{root,any} this is equivalent to the root of the partition.
 			if !android.InList(relDestDirFromInstallDirBase, []string{"", "."}) {
@@ -374,10 +375,6 @@ func createPrebuiltEtcModulesInDirectory(ctx android.LoadHookContext, partition,
 
 			// If dsts property has to be set and the selected module type is prebuilt_root,
 			// use prebuilt_any instead.
-			if etcInstallPathKey == "" {
-				moduleFactory = etc.PrebuiltAnyFactory
-			}
-			modulePropsPtr.Srcs = srcBaseFiles
 			dsts := proptools.NewConfigurable[[]string](nil, nil)
 			for _, installBaseFile := range installBaseFiles {
 				dsts.AppendSimpleValue([]string{filepath.Join(relDestDirFromInstallDirBase, installBaseFile)})
