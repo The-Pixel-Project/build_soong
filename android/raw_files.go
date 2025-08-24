@@ -213,10 +213,10 @@ type rawFileInfo struct {
 
 var rawFileSetKey OnceKey = NewOnceKey("raw file set")
 
-func getRawFileSet(config Config) *syncmap.SyncMap[string, rawFileInfo] {
-	return config.Once(rawFileSetKey, func() any {
-		return &syncmap.SyncMap[string, rawFileInfo]{}
-	}).(*syncmap.SyncMap[string, rawFileInfo])
+func getRawFileSet(config Config) *sync.Map {
+    return config.Once(rawFileSetKey, func() any {
+        return &sync.Map{}
+    }).(*sync.Map)
 }
 
 // ContentFromFileRuleForTests returns the content that was passed to a WriteFileRule for use
