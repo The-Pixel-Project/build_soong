@@ -15,20 +15,19 @@
 package android
 
 import (
-	"crypto/sha1"
-	"encoding/hex"
-	"fmt"
-	"io"
-	"io/fs"
-	"os"
-	"path/filepath"
-	"strings"
-	"testing"
+    "crypto/sha1"
+    "encoding/hex"
+    "fmt"
+    "io"
+    "io/fs"
+    "os"
+    "path/filepath"
+    "strings"
+    "testing"
 
-	"github.com/google/blueprint"
-	"github.com/google/blueprint/syncmap"
-
-	"github.com/google/blueprint/proptools"
+    "github.com/google/blueprint"
+    "github.com/google/blueprint/proptools"
+    "sync"
 )
 
 // WriteFileRule creates a ninja rule to write contents to a file by immediately writing the
@@ -231,7 +230,7 @@ func ContentFromFileRuleForTests(t *testing.T, ctx *TestContext, params TestingB
 
 	key := filepath.Base(params.Input.String())
 	rawFileSet := getRawFileSet(ctx.Config())
-	rawFileInfo, _ := rawFileSet.Load(key)
+	rawFileInfo, _ := loadRaw(rawFileSet, key)
 
 	return rawFileInfo.contentForTests
 }
@@ -270,7 +269,7 @@ func (rawFilesSingleton) GenerateBuildActions(ctx SingletonContext) {
 		// or if a file with the same hash was written but to a different path in the raw directory, then delete it.
 		// Checking that the path matches allows changing the structure of the raw directory, for example to increase
 		// the sharding.
-		rawFileInfo, written := rawFileSet.Load(key)
+		rawFileInfo, written := loadRaw(rawFileSet, key)
 		if !written || rawFileInfo.relPath != relPath {
 			os.Remove(path)
 		}
