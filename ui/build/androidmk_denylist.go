@@ -35,7 +35,6 @@ var androidmk_denylist []string = []string{
 	"device/google_car/",
 	"device/sample/",
 	"frameworks/",
-	"hardware/google/",
 	"hardware/interfaces/",
 	"hardware/libhardware/",
 	"hardware/libhardware_legacy/",
