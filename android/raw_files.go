@@ -219,6 +219,16 @@ func getRawFileSet(config Config) *sync.Map {
     }).(*sync.Map)
 }
 
+// loadRaw wraps sync.Map.Load with a typed rawFileInfo return.
+func loadRaw(m *sync.Map, key string) (rawFileInfo, bool) {
+    v, ok := m.Load(key)
+    if !ok {
+        return rawFileInfo{}, false
+    }
+    info, _ := v.(rawFileInfo)
+    return info, true
+}
+
 // ContentFromFileRuleForTests returns the content that was passed to a WriteFileRule for use
 // in tests.
 func ContentFromFileRuleForTests(t *testing.T, ctx *TestContext, params TestingBuildParams) string {
