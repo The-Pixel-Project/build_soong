@@ -375,7 +375,7 @@ func createPrebuiltEtcModulesInDirectory(ctx android.LoadHookContext, partition,
 
 			// If dsts property has to be set and the selected module type is prebuilt_root,
 			// use prebuilt_any instead.
-			dsts := proptools.NewConfigurable[[]string](nil, nil)
+			dsts = proptools.NewConfigurable[[]string](nil, nil)
 			for _, installBaseFile := range installBaseFiles {
 				dsts.AppendSimpleValue([]string{filepath.Join(relDestDirFromInstallDirBase, installBaseFile)})
 			}
